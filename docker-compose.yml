@@ -1,0 +1,39 @@
+version: "2.29.6"
+
+services:
+  mysql:
+        container_name: mysql
+        image: mysql
+        ports: 
+              - 3307:3306
+        # networks:
+        #       - networkcoba
+        environment:
+              - MYSQL_ROOT_PASSWORD=1234
+        volumes: 
+              - C:/Testingdocker/mysql-data:/var/lib/mysql
+  flask:
+        container_name: flask
+        image: myapp:v1
+        ports: 
+              - 5000:5000
+        # networks:
+        #       - networkcoba
+        depends_on:
+              - mysql
+        volumes: 
+              - C:/Testingdocker/python:/usr/src/myapp
+            
+  jenkins:
+        container_name: jenkins
+        image: jenkins/jenkins:lts-jdk21
+        ports: 
+              - 8080:8080
+              - 50000:50000
+        volumes: 
+              - C:/Testingdocker/jenkins_home:/var/jenkins_home
+        
+
+# networks:
+#   networkcoba:
+#     name: networkcoba
